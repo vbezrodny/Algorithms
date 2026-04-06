@@ -6,6 +6,10 @@
 #include <cstring>
 
 #define M_CONST 15 // [5; 20]
+#define STACK_OVERFLOW 1000000
+#define MIN_VALUE (-1000.0f)
+#define MAX_VALUE 1000.0f
+#define INTERVAL 500.0f
 
 using namespace std;
 using namespace std::chrono;
@@ -55,13 +59,13 @@ void run_complexity_analysis()
 
         for (const char* seq_type : seq_types) {
             if (strcmp(seq_type, "ordered") == 0) {
-                generate_ordered_seq(array, size, -1000.0f, 1000.0f, 0.0f);
+                generate_ordered_seq(array, size, MIN_VALUE, MAX_VALUE, 0.0f);
             } else if (strcmp(seq_type, "reordered") == 0) {
-                generate_reordered_seq(array, size, -1000.0f, 1000.0f, 0.0f);
+                generate_reordered_seq(array, size, MIN_VALUE, MAX_VALUE, 0.0f);
             } else if (strcmp(seq_type, "random") == 0) {
-                generate_random_seq(array, size, -1000.0f, 1000.0f, 0.0f);
+                generate_random_seq(array, size, MIN_VALUE, MAX_VALUE, 0.0f);
             } else if (strcmp(seq_type, "quasi") == 0) {
-                generate_quasi_seq(array, size, -1000.0f, 1000.0f, 500.0f);
+                generate_quasi_seq(array, size, MIN_VALUE, MAX_VALUE, INTERVAL);
             }
 
             // Создаем копию для каждого алгоритма
@@ -212,7 +216,7 @@ void counting_sort_float(T* array, size_t size)
     }
 
     const size_t range = static_cast<size_t>(max_val - min_val) + 1;
-    if (range > 1000000) {
+    if (range > STACK_OVERFLOW) {
         insertion_sort(array, size);
         return;
     }
